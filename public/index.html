@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>牛肉價格查詢</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+<h1>牛肉價格查詢</h1>
+<form id="searchForm">
+  <label for="startYear">起始年份:</label>
+  <select id="startYear" name="startYear">
+    <option value="100">100</option>
+    <option value="101">101</option>
+    <option value="102">102</option>
+    <option value="103">103</option>
+    <option value="104">104</option>
+    <option value="105">105</option>
+    <option value="106">106</option>
+    <option value="107">107</option>
+    <option value="108">108</option>
+    <option value="109">109</option>
+    <option value="110">110</option>
+    <option value="111">111</option>
+    <option value="112">112</option>
+  </select>
+  <label for="endYear">結束年份:</label>
+  <select id="endYear" name="endYear">
+    <option value="100">100</option>
+    <option value="101">101</option>
+    <option value="102">102</option>
+    <option value="103">103</option>
+    <option value="104">104</option>
+    <option value="105">105</option>
+    <option value="106">106</option>
+    <option value="107">107</option>
+    <option value="108">108</option>
+    <option value="109">109</option>
+    <option value="110">110</option>
+    <option value="111">111</option>
+    <option value="112">112</option>
+  </select>
+  <label for="beefType">牛腩或牛腱:</label>
+  <select id="beefType" name="beefType">
+    <option value="BeefFlankPrice">牛腩</option>
+    <option value="BeefTendonPrice">牛腱</option>
+  </select>
+  <input type="submit" value="查詢">
+</form>
+<div id="results"></div>
+<script>
+  document.getElementById('searchForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const startYear = document.getElementById('startYear').value;
+    const endYear = document.getElementById('endYear').value;
+    const beefType = document.getElementById('beefType').value;
+    const res = await fetch(`/search?startYear=${startYear}&endYear=${endYear}&beefType=${beefType}`);
+
+    const data = await res.json();
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = '<h2>價格查詢結果</h2>';
+    if (data.length > 0) {
+      const table = '<table><tr><th>年份</th><th>價格</th></tr>' + data.map(item => `<tr><td>${item.Year}</td><td>${item.Price}</td></tr>`).join('') + '</table>';
+      resultsDiv.innerHTML += table;
+    } else {
+      resultsDiv.innerHTML += '<p>無結果</p>';
+    }
+  });
+</script>
+</body>
+</html>
