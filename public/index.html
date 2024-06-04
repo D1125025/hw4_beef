@@ -6,8 +6,19 @@
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-<h1>牛肉價格查詢</h1>
+<header>
+  <h1>BEEFFFF</h1>
+  <nav>
+    <button class="option-button" onclick="redirectTo('intro.html')">介紹</button>
+    <button class="option-button" onclick="redirectTo('detail.html')">相關</button>
+    <button class="option-button" onclick="redirectTo('index.html')">查詢</button>
+
+  </nav>
+</header>
+
 <form id="searchForm">
+
+  <h1>牛肉價格查詢</h1>
   <label for="startYear">起始年份:</label>
   <select id="startYear" name="startYear">
     <option value="100">100</option>
@@ -47,8 +58,13 @@
   </select>
   <input type="submit" value="查詢">
 </form>
+
 <div id="results"></div>
 <script>
+  function redirectTo(url) {
+    window.location.href = url;
+  }
+
   document.getElementById('searchForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const startYear = document.getElementById('startYear').value;
@@ -66,6 +82,24 @@
       resultsDiv.innerHTML += '<p>無結果</p>';
     }
   });
+
+  document.getElementById('showPopup').addEventListener('click', function() {
+    var popup = document.getElementById('popup');
+    popup.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', function(event) {
+    var popup = document.getElementById('popup');
+    var popupContent = document.getElementById('popupContent');
+    var targetElement = event.target;
+
+    if (!popupContent.contains(targetElement) && popup.classList.contains('visible')) {
+      popup.classList.add('hidden');
+    }
+  });
+
+
+
 </script>
 </body>
 </html>
